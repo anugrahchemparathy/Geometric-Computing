@@ -1,8 +1,5 @@
-//const Point = require('./Point.js');
-//const utils = require('./utils.js');
-
-
-
+import {Point} from './Point.js';
+import {distance} from './utils.js';
 
 /**
  * Function to find and return the closest pair of a points 
@@ -10,7 +7,7 @@
  * @param {*} points an array of length > 1 of Point objects
  * @returns an ordered pair array of Point object
  */
-function closestPair(Points) {    
+ function closestPair(Points) {    
     const PointsX = [...Points].sort((p1,p2) => p1.X - p2.X);
     const PointsY = [...Points].sort((p1,p2) => p1.Y - p2.Y);
 
@@ -29,13 +26,13 @@ function closestPair(Points) {
  * @returns an array [dist, ordered pair] containing the shortest distance in the input arrays and the corresponding pair of points
  */
 function closestPairRecurse(PointsX,PointsY){
-    stringPoints = PointsX.map(p=>p.toString());
+    const stringPoints = PointsX.map(p=>p.toString());
     const numPoints = PointsX.length;
     console.log("recursing on PointsX", stringPoints);
     console.log("numPoints =", numPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
-    else if (numPoints == 2) return([utils.distance(PointsX[0],PointsX[1]),PointsX]);
+    else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
 
     const medianIndex = Math.floor(numPoints/2);
     const splitX = PointsX[medianIndex].X;
@@ -60,8 +57,8 @@ function closestPairRecurse(PointsX,PointsY){
             const p2 = middleStrip[j]
             if (p2.Y - p1.X > searchDist) break;
 
-            if (utils.distance(p1,p2) < bestDist){
-                bestDist = utils.distance(p1,p2);
+            if (distance(p1,p2) < bestDist){
+                bestDist = distance(p1,p2);
                 bestPair = [p1,p2];
             }
         }
@@ -70,6 +67,6 @@ function closestPairRecurse(PointsX,PointsY){
 
 }
 
-const myPoints = [new Point.Point(1,1), new Point.Point(2,2), new Point.Point(3,3), new Point.Point(4,2.1)];
+const myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
 
 closestPair(myPoints);

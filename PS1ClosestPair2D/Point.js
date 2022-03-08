@@ -1,4 +1,4 @@
-class Point {
+export class Point {
     constructor(x,y){
         this.X = x;
         this.Y = y;
@@ -7,6 +7,3 @@ class Point {
         return "Point(" + this.X + "," + this.Y + ")";
     }
 }
-
-
-exports.Point = Point;
