@@ -3,26 +3,39 @@ class Point {
         this.X = x;
         this.Y = y;
     }
-    distance(other){
-        return ((this.X-other.X)**2 + (this.Y-other.Y)**2)**0.5
+    toString(){
+        return "Point(" + this.X + "," + this.Y + ")";
     }
+}
+
+/**
+ * Helper Function to compute distance between two 2D points
+ * @param {*} p1 the first point
+ * @param {*} p2 the second point
+ * @returns the euclidean distance
+ */
+function distance (p1,p2){
+    return ((p1.X-p2.X)**2 + (p1.Y-p2.Y)**2)**0.5
 }
 
 
 /**
- * Function to find and return the closest pair of a points
- * @param {*} points an array of Point objects
+ * Function to find and return the closest pair of a points 
+ * given that all points have unique X,Y coordinates
+ * @param {*} points an array of length > 1 of Point objects
  * @returns an ordered pair array of Point object
  */
+function closestPair(Points) {    
+    const PointsX = [...Points].sort((p1,p2) => p1.X - p2.X);
+    const PointsY = [...Points].sort((p1,p2) => p1.Y - p2.Y);
 
-function closestPair(Points) {
+    if (Points.length < 2) throw new Error('Points should contain at least two points');
+    for (let i = 0; i < Points.length; i++){
+        if(PointsX[i] === PointsX[i+1]) throw new Error('X coordinates should be unique');
+        if(PointsY[i] === PointsY[i+1]) throw new Error('Y coordinates should be unique');
+    }
     
-    const PointsX = Points.sort((p1,p2) => p1.X - p2.X);
-    const PointsY = Points.sort((p1,p2) => p1.Y - p2.Y);
-    
-    closestPairRecurse(PointsX,PointsY);
-
-
+    const [bestDist,[p1,p2]] = closestPairRecurse(PointsX,PointsY);
 }
 /**
  * Helper function to implement recursion
@@ -31,11 +44,13 @@ function closestPair(Points) {
  * @returns an array [dist, ordered pair] containing the shortest distance in the input arrays and the corresponding pair of points
  */
 function closestPairRecurse(PointsX,PointsY){
-    const numPoints = PointsX.size;
+    stringPoints = PointsX.map(p=>p.toString());
+    const numPoints = PointsX.length;
+    console.log("recursing on PointsX", stringPoints);
+    console.log("numPoints =", numPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
-    else if (numPoints == 2) return([PointsX[0].distance(PointsX[1]),PointsX]);
-
+    else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
 
     const medianIndex = Math.floor(numPoints/2);
     const splitX = PointsX[medianIndex].X;
@@ -54,25 +69,24 @@ function closestPairRecurse(PointsX,PointsY){
 
     const middleStrip = PointsY.filter(p => Math.abs(splitX - p.X) <= searchDist);
 
-    for (let i = 0; i < middleStrip.size; i++){
+    for (let i = 0; i < middleStrip.length; i++){
         const p1 = middleStrip[i];
-        for(let j = i+1; j < middleStrip.size; j++){
+        for(let j = i+1; j < middleStrip.length; j++){
             const p2 = middleStrip[j]
             if (p2.Y - p1.X > searchDist) break;
 
-            if (p1.distance(p2) < bestDist){
-                bestDist = p1.distance(p2);
+            if (distance(p1,p2) < bestDist){
+                bestDist = distance(p1,p2);
                 bestPair = [p1,p2];
             }
         }
     }
-    return bestPair;
-
-
-
-
-    
+    return [bestDist,bestPair];
 
 }
 
-myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2)];
+myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
+samplePoint = [new Point(1,1)];
+sampleTwoPoints = [new Point(1,1), new Point (2,2)];
+
+closestPair(myPoints);
