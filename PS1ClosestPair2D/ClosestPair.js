@@ -18,6 +18,9 @@ import {distance} from './utils.js';
     }
     
     const [bestDist,[p1,p2]] = closestPairRecurse(PointsX,PointsY);
+
+    console.log("bestDist =", bestDist);
+    console.log("closestPair = (" + p1 + "," + p2 + ")");
 }
 /**
  * Helper function to implement recursion
@@ -29,7 +32,6 @@ function closestPairRecurse(PointsX,PointsY){
     const stringPoints = PointsX.map(p=>p.toString());
     const numPoints = PointsX.length;
     console.log("recursing on PointsX", stringPoints);
-    console.log("numPoints =", numPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
     else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
