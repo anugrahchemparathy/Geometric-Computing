@@ -1,22 +1,6 @@
-class Point {
-    constructor(x,y){
-        this.X = x;
-        this.Y = y;
-    }
-    toString(){
-        return "Point(" + this.X + "," + this.Y + ")";
-    }
-}
+const Point = require('./Point.js');
+const utils = require('./utils.js');
 
-/**
- * Helper Function to compute distance between two 2D points
- * @param {*} p1 the first point
- * @param {*} p2 the second point
- * @returns the euclidean distance
- */
-function distance (p1,p2){
-    return ((p1.X-p2.X)**2 + (p1.Y-p2.Y)**2)**0.5
-}
 
 
 /**
@@ -50,7 +34,7 @@ function closestPairRecurse(PointsX,PointsY){
     console.log("numPoints =", numPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
-    else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
+    else if (numPoints == 2) return([utils.distance(PointsX[0],PointsX[1]),PointsX]);
 
     const medianIndex = Math.floor(numPoints/2);
     const splitX = PointsX[medianIndex].X;
@@ -75,8 +59,8 @@ function closestPairRecurse(PointsX,PointsY){
             const p2 = middleStrip[j]
             if (p2.Y - p1.X > searchDist) break;
 
-            if (distance(p1,p2) < bestDist){
-                bestDist = distance(p1,p2);
+            if (utils.distance(p1,p2) < bestDist){
+                bestDist = utils.distance(p1,p2);
                 bestPair = [p1,p2];
             }
         }
@@ -85,8 +69,6 @@ function closestPairRecurse(PointsX,PointsY){
 
 }
 
-myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
-samplePoint = [new Point(1,1)];
-sampleTwoPoints = [new Point(1,1), new Point (2,2)];
+myPoints = [new Point.Point(1,1), new Point.Point(2,2), new Point.Point(3,3), new Point.Point(4,2.1)];
 
 closestPair(myPoints);

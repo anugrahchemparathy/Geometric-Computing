@@ -7,3 +7,6 @@ class Point {
         return "Point(" + this.X + "," + this.Y + ")";
     }
 }
+
+
+exports.Point = Point;
