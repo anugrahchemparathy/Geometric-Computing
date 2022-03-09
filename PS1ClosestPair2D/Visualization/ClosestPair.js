@@ -14,12 +14,12 @@ function closestPair(Points) {
         if(PointsY[i] === PointsY[i+1]) throw new Error('Y coordinates should be unique');
     }
     
-    const [bestDist,[p1,p2]] = closestPairRecurse(PointsX,PointsY);
+    const [bestDist,[p1,p2],splitX,searchDist,leftClosest,rightClosest] = closestPairRecurse(PointsX,PointsY,true);
 
-    console.log("bestDist =", bestDist);
-    console.log("closestPair = (" + p1 + "," + p2 + ")");
+    //console.log("bestDist =", bestDist);
+    //console.log("closestPair = (" + p1 + "," + p2 + ")");
     
-    return [bestDist,[p1,p2]];
+    return [bestDist,[p1,p2],splitX,searchDist,leftClosest,rightClosest];
 }
 /**
  * Helper function to implement recursion
@@ -27,7 +27,7 @@ function closestPair(Points) {
  * @param {*} PointsY sorted array of Point objects by Y coordinate
  * @returns an array [dist, ordered pair] containing the shortest distance in the input arrays and the corresponding pair of points
  */
-function closestPairRecurse(PointsX,PointsY){
+function closestPairRecurse(PointsX,PointsY, returnProgressValues = false){
     const numPoints = PointsX.length;
     //const stringPoints = PointsX.map(p=>p.toString());
     //console.log("recursing on PointsX", stringPoints);
@@ -64,15 +64,10 @@ function closestPairRecurse(PointsX,PointsY){
             }
         }
     }
-    return [bestDist,bestPair];
+
+    if (!returnProgressValues) return [bestDist,bestPair];
+    else {
+        return [bestDist,bestPair,splitX,searchDist,leftClosest,rightClosest]
+    }
 
 }
-
-
-
-
-/*
-//Testing
-const myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
-closestPair(myPoints);
-*/
