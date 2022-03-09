@@ -57,7 +57,7 @@ export function closestPairRecurse(PointsX,PointsY){
         const p1 = middleStrip[i];
         for(let j = i+1; j < middleStrip.length; j++){
             const p2 = middleStrip[j]
-            if (p2.Y - p1.X > searchDist) break;
+            if (p2.Y - p1.Y > searchDist) break;
 
             if (distance(p1,p2) < bestDist){
                 bestDist = distance(p1,p2);

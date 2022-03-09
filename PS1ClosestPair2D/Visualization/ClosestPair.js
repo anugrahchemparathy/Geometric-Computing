@@ -18,6 +18,8 @@ function closestPair(Points) {
 
     console.log("bestDist =", bestDist);
     console.log("closestPair = (" + p1 + "," + p2 + ")");
+    
+    return [bestDist,[p1,p2]];
 }
 /**
  * Helper function to implement recursion
@@ -26,9 +28,9 @@ function closestPair(Points) {
  * @returns an array [dist, ordered pair] containing the shortest distance in the input arrays and the corresponding pair of points
  */
 function closestPairRecurse(PointsX,PointsY){
-    const stringPoints = PointsX.map(p=>p.toString());
     const numPoints = PointsX.length;
-    console.log("recursing on PointsX", stringPoints);
+    //const stringPoints = PointsX.map(p=>p.toString());
+    //console.log("recursing on PointsX", stringPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
     else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
@@ -54,7 +56,7 @@ function closestPairRecurse(PointsX,PointsY){
         const p1 = middleStrip[i];
         for(let j = i+1; j < middleStrip.length; j++){
             const p2 = middleStrip[j]
-            if (p2.Y - p1.X > searchDist) break;
+            if (p2.Y - p1.Y > searchDist) break;
 
             if (distance(p1,p2) < bestDist){
                 bestDist = distance(p1,p2);
