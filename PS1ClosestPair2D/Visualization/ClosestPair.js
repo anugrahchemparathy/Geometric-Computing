@@ -15,9 +15,6 @@ function closestPair(Points) {
     }
     
     const [bestDist,[p1,p2],splitX,searchDist,leftClosest,rightClosest] = closestPairRecurse(PointsX,PointsY,true);
-
-    //console.log("bestDist =", bestDist);
-    //console.log("closestPair = (" + p1 + "," + p2 + ")");
     
     return [bestDist,[p1,p2],splitX,searchDist,leftClosest,rightClosest];
 }
@@ -29,8 +26,6 @@ function closestPair(Points) {
  */
 function closestPairRecurse(PointsX,PointsY, returnProgressValues = false){
     const numPoints = PointsX.length;
-    //const stringPoints = PointsX.map(p=>p.toString());
-    //console.log("recursing on PointsX", stringPoints);
 
     if (numPoints == 1) return([Number.POSITIVE_INFINITY,undefined]);
     else if (numPoints == 2) return([distance(PointsX[0],PointsX[1]),PointsX]);
