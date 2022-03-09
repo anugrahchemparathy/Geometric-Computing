@@ -15,7 +15,7 @@ let left_padding = canvas.width * 0.15;
 let top_padding = canvas.width * 0.05;
 let edge_length = canvas.width * 0.7;
 let interior_padding = edge_length * 0.02;
-
+let pointRadius = edge_length/70;
 
 /*
 =================================================================
@@ -24,7 +24,7 @@ Drawable Point implementation
 */
 
 class PointRep extends Point{
-    constructor (X, Y, closest = false, radius = 10) {
+    constructor (X, Y, closest = false, radius = pointRadius) {
         super(X,Y);
         this.closest = closest;
         this.radius = radius;
