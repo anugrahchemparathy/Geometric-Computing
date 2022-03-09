@@ -1,13 +1,10 @@
-import {Point} from './Point.js';
-import {distance} from './utils.js';
-
 /**
  * Function to find and return the closest pair of a points 
  * given that all points have unique X,Y coordinates
  * @param {*} points an array of length > 1 of Point objects
  * @returns an ordered pair array of Point object
  */
- function closestPair(Points) {    
+function closestPair(Points) {    
     const PointsX = [...Points].sort((p1,p2) => p1.X - p2.X);
     const PointsY = [...Points].sort((p1,p2) => p1.Y - p2.Y);
 
@@ -69,6 +66,11 @@ function closestPairRecurse(PointsX,PointsY){
 
 }
 
-const myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
 
+
+
+/*
+//Testing
+const myPoints = [new Point(1,1), new Point(2,2), new Point(3,3), new Point(4,2.1)];
 closestPair(myPoints);
+*/
