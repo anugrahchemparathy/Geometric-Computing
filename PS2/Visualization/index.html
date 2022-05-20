@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Canvas</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="Point.js"></script>
+  <script src="ClosestPair.js"></script>
+  <script src="canvas.js" async></script>
+</head>
+
+<body>
+
+  <canvas></canvas>
+  <br></br>
+  <button onclick="myFunction()"> Show Search Range </button>
+  <button onclick="Func2()"> Show left and right closest pairs </button>
+
+  <script>
+    function myFunction() {
+      showSearchRange = !showSearchRange;
+      animate();
+    }
+    function Func2(){
+      showLeftRightClosest = !showLeftRightClosest;
+      animate();
+    }
+  </script>
+
+</body>
+
+</html>
