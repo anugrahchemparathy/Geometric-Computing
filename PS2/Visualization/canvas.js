@@ -1,3 +1,14 @@
+var gridInput = document.getElementById("changeGrids");
+window.onload = function() {
+    gridInput.addEventListener("input", function() {
+        console.log(gridInput.value);
+        if (gridInput.value > 0){
+            gridWidth = gridInput.value;
+            animate();
+        }
+    });
+}
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -23,10 +34,10 @@ let interior_padding = edge_length_vertical * 0.02;
 let unitRadius = edge_length_vertical/50; // arbitrarily define this to be the size of a single unit of measurement
 
 
-console.log(`left_padding = ${left_padding}`);
-console.log(`top_padding = ${top_padding}`);
-console.log(`interior_padding = ${interior_padding}`);
-console.log(`unitRadius = ${unitRadius}`);
+// console.log(`left_padding = ${left_padding}`);
+// console.log(`top_padding = ${top_padding}`);
+// console.log(`interior_padding = ${interior_padding}`);
+// console.log(`unitRadius = ${unitRadius}`);
 
 /*
 =================================================================
@@ -142,8 +153,6 @@ function adjustGrid(k){
     for (const point of inputPoints){
         columnIndex = Math.floor((point.X - left_padding) / gridSpacing);
         rowIndex = Math.floor((point.Y - top_padding) / gridSpacing);
-        // console.log(columnIndex);
-        // console.log(rowIndex);
 
         if (point.X < left_padding + columnIndex * gridSpacing + unitRadius || point.X > left_padding + (columnIndex+1) * gridSpacing - unitRadius) continue;
         if (point.Y < top_padding + rowIndex * gridSpacing + unitRadius || point.Y > top_padding + (rowIndex+1) * gridSpacing - unitRadius) continue;
@@ -152,8 +161,6 @@ function adjustGrid(k){
         let slot = gridPoints[rowIndex][columnIndex]
         slot.push(point);
     }
-
-    console.log("GRID POINTS =", gridPoints);
 
     
 }
