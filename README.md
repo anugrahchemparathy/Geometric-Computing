@@ -3,7 +3,7 @@ Implementations for 6.850 Geometric Computing
 
 PS2PackingApproximation contains an implementation/interactive demonstration of a PTAS approximation algorithm for determining an optimal packing of disks. 
 
-You can try the demo [here](https://anugrahchemparathy.github.io/Geometric-Computing/PS2PackingApproximation/Visualization/index.html)
+You can try the demo [here](https://anugrahchemparathy.github.io/Geometric-Computing/PS2PackingApproximation/index.html)
 
 https://user-images.githubusercontent.com/76890832/169883201-9fd2e2e0-9cbf-4190-b19a-2889148d8eb4.mov
 
