@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 canvas.width = 0.85 * window.innerWidth
 canvas.height = Math.min(canvas.width, 0.7*window.innerHeight);
 
+let showGrid = true;
 
 
 let left_padding = canvas.width * 0.05;
@@ -43,7 +44,7 @@ class PointRep extends Point{
     draw () {
         ctx.beginPath();
         ctx.arc(this.X, this.Y, this.radius, 0, 2 * Math.PI);
-        if (this.bordered) {
+        if (this.bordered && showGrid) {
             ctx.stroke();
         }
         else {
@@ -65,8 +66,9 @@ Canvas Altering Functions
 */
 
 function animate() {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    drawGrid(gridWidth);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (showGrid) drawGrid(gridWidth);
     
     ctx.strokeStyle = "white";
     ctx.strokeRect(left_padding, top_padding, edge_length_horizontal, edge_length_vertical);

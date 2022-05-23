@@ -25,6 +25,7 @@
   <div id="canvasInfo">
 
     <div id="resizeButton">
+      <button onclick="myFunction()"> Show Grid </button>
       <label for="gridSize">Grid Size (k):</label>
       <input type="number" name="gridSize" placeholder="10" id="changeGrids" value = 10>
     </div>
@@ -42,6 +43,16 @@
 
     For more information, see <a href="https://people.csail.mit.edu/indyk/6.838/handouts/lec19.pdf">here</a>.
   </div>
+
+  <button onclick="myFunction()"> Show Search Range </button>
+  <button onclick="Func2()"> Show left and right closest pairs </button>
+
+  <script>
+    function myFunction() {
+      showGrid = !showGrid;
+      animate();
+    }
+  </script>
 
 
 </body>
