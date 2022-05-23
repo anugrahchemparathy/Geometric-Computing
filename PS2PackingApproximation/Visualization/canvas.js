@@ -1,16 +1,12 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = Math.min(window.innerWidth,window.innerWidth);
-canvas.height = Math.min(window.innerWidth,0.9*window.innerHeight);
-
-window.addEventListener('resize', function () {
-    canvas.width = Math.min(window.innerWidth,window.innerHeight);
-    canvas.height = canvas.width;
-});
+canvas.width = 0.85 * window.innerWidth
+canvas.height = Math.min(canvas.width, 0.7*window.innerHeight);
 
 
-let left_padding = canvas.height * 0.05;
+
+let left_padding = canvas.width * 0.05;
 let top_padding = canvas.height * 0.05;
 let edge_length_vertical = canvas.height * 0.9;
 let edge_length_horizontal = canvas.width * 0.9;

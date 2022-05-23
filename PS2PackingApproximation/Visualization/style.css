@@ -1,8 +1,46 @@
+:root {
+  --primary: #396dff;
+  --grey: #f7f7f7;
+  --white: #fff;
+  --blu: #97e1bf;
+  --deepblu: #309da9;
+  --purple: #7730a9;
+
+  --xs: 4px;
+  --s: 8px;
+  --m: 16px;
+  --l: 24px;
+}
+
 body {
-    margin: 0;
-    overflow-x: hidden;
-  }
+  margin: 0;
+  overflow-x: hidden;
+}
+
+canvas {
+  background: rgb(0, 0, 0);
+}
+
+p {
+  border: 2px solid powderblue;
+  padding: 30px;
+}
+
+
+#resizeButton{
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 10px;
+  padding-top: 10px;
   
-  canvas {
-    background: rgb(0, 0, 0);
-  }
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+#canvasInfo{
+  padding: 50px;
+  padding-bottom: 100px;
+  padding-top: 10px;
+}
+
+

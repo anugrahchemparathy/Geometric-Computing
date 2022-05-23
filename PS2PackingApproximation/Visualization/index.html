@@ -15,12 +15,33 @@
 
 <body>
 
-  <canvas></canvas>
+  <div style = "text-align:center;">
+    <canvas></canvas>
+  </div>
+
   <br></br>
 
-  <label for="gridSize">Grid Size (k):</label>
-  <input type="number" name="gridSize" placeholder="10" id="changeGrids" value = 10>
-  <br></br>
+
+  <div id="canvasInfo">
+
+    <div id="resizeButton">
+      <label for="gridSize">Grid Size (k):</label>
+      <input type="number" name="gridSize" placeholder="10" id="changeGrids" value = 10>
+    </div>
+  
+    <br>
+
+
+    Shown above is an interactive simulation of a circle packing approximation algorithm. 
+    
+    <br> <br>
+    
+    Given a set of <b>C</b> of unit disks, find a subset <b>C'</b> of <b>C</b> such that all disks in <b>C'</b> are pairwise disjoint and |<b>C'</b>| is maximized. This is an NP-hard problem, so we instead provide a polynomial time approximation scheme that has accuracy &#8805; 1 - &#x3B5; where &#x3B5; = O(1/k) and k is your chosen gridsize.
+    
+    <br> <br>
+
+    For more information, see <a href="https://people.csail.mit.edu/indyk/6.838/handouts/lec19.pdf">here</a>.
+  </div>
 
 
 </body>
