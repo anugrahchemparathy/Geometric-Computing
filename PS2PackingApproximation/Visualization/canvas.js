@@ -1,14 +1,3 @@
-var gridInput = document.getElementById("changeGrids");
-window.onload = function() {
-    gridInput.addEventListener("input", function() {
-        console.log(gridInput.value);
-        if (gridInput.value > 0){
-            gridWidth = gridInput.value;
-            animate();
-        }
-    });
-}
-
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -21,17 +10,20 @@ window.addEventListener('resize', function () {
 });
 
 
-let gridWidth = 10;
-const inputPoints = [];
-let gridPoints = new Map(); // (r,c) => [list of points in this grid cell]
-
-
 let left_padding = canvas.height * 0.05;
 let top_padding = canvas.height * 0.05;
 let edge_length_vertical = canvas.height * 0.9;
 let edge_length_horizontal = canvas.width * 0.9;
 let interior_padding = edge_length_vertical * 0.02;
 let unitRadius = edge_length_vertical/50; // arbitrarily define this to be the size of a single unit of measurement
+
+
+let gridWidth = 10;
+let gridSpacing = unitRadius * gridWidth; //the practical canvas spacing equal to 1 grid cell
+
+const inputPoints = [];
+let gridPoints = [[]]; // [r][c] => [list of points in this grid cell]
+let packedPoints = [[]];
 
 
 // console.log(`left_padding = ${left_padding}`);
@@ -49,20 +41,22 @@ class PointRep extends Point{
     constructor (X, Y, radius = unitRadius) {
         super(X,Y);
         this.bordered = true;
+        this.included = false;
         this.radius = radius;
     }
     draw () {
         ctx.beginPath();
         ctx.arc(this.X, this.Y, this.radius, 0, 2 * Math.PI);
-        ctx.stroke();
         if (this.bordered) {
-            ctx.fillStyle = "aqua";
+            ctx.stroke();
         }
         else {
-            ctx.fillStyle = "white";
+            ctx.stroke();
+            if (this.included) ctx.fillStyle = "cyan";
+            else ctx.fillStyle = "white";
+            ctx.fill();
         }
-        ctx.fill();
-        
+        ctx.closePath();
     }
 }
 
@@ -77,43 +71,30 @@ Canvas Altering Functions
 function animate() {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     drawGrid(gridWidth);
-    adjustGrid(gridWidth);
-
+    
     ctx.strokeStyle = "white";
     ctx.strokeRect(left_padding, top_padding, edge_length_horizontal, edge_length_vertical);
 
     for (const point of inputPoints){
         point.draw();
     }
+    for (let r = 0; r * gridSpacing < edge_length_vertical; r++){
+        for(let c = 0; c * gridSpacing < edge_length_horizontal; c++){
+            for (const point of packedPoints[r][c]) point.draw();
+        }
+    }
+    //console.log(gridPoints);
+    console.log(packedPoints);
 
 };
 
-function addPoint (canvas, event) {
-    const cRect = canvas. getBoundingClientRect();
 
-    let newPointX = event.clientX - cRect.left;
-    let newPointY = event.clientY - cRect.top;
-    
-    if (newPointX < left_padding+interior_padding) return;
-    else if (newPointX > left_padding+edge_length_horizontal-interior_padding) return;
+/*
+=================================================================
+Miscellaneous Grid Stuff
+=================================================================
+*/
 
-    if (newPointY < top_padding+interior_padding) return;
-    else if (newPointY > top_padding+edge_length_vertical-interior_padding) return;
-
-
-    for (const point of inputPoints){
-        //all X and Y coordinates must be distinct
-        if (point.X === newPointX || point.Y === newPointY) return;
-    }
-
-    inputPoints.push(new PointRep(newPointX,newPointY));
-
-    console.log(inputPoints.map((p)=>p.toString()));
-    console.log("X: "+event.clientX+", Y: "+event.clientY);
-
-    animate();
-
-}
 
 function drawGrid(k) {
     ctx.strokeStyle = "white";
@@ -135,19 +116,23 @@ function drawGrid(k) {
     }
 }
 
-
-function adjustGrid(k){
-    for (const point of inputPoints) point.bordered = true;
+function resetGrid(k){
+    clearPointFields(inputPoints);
 
     gridPoints = [];
+    packedPoints = [];
 
-    let gridSpacing = unitRadius * k; // by canvas dimensions
     for (let r = 0; r * gridSpacing < edge_length_vertical; r++){
-        layer = []
+        gridLayer = []
+        packedLayer = []
         for(let c = 0; c * gridSpacing < edge_length_horizontal; c++){
-            layer.push([]);
+            gridLayer.push([]);
+            packedLayer.push([]);
+
         }
-        gridPoints.push(layer);
+        gridPoints.push(gridLayer);
+        packedPoints.push(packedLayer);
+
     }
 
     for (const point of inputPoints){
@@ -162,8 +147,71 @@ function adjustGrid(k){
         slot.push(point);
     }
 
-    
+    for (let r = 0; r * gridSpacing < edge_length_vertical; r++){
+        for(let c = 0; c * gridSpacing < edge_length_horizontal; c++){
+            getSizedSubsetsRecursive(gridPoints[r][c], k ** 2, r, c, evaluationFunction = checkSubsetOverlap);
+            for (const point of packedPoints[r][c]) point.included = true;
+        }
+    }
+
 }
+
+function adjustGrid(k, point){
+
+    columnIndex = Math.floor((point.X - left_padding) / gridSpacing);
+    rowIndex = Math.floor((point.Y - top_padding) / gridSpacing);
+
+    if (point.X < left_padding + columnIndex * gridSpacing + unitRadius || point.X > left_padding + (columnIndex+1) * gridSpacing - unitRadius) return;
+    if (point.Y < top_padding + rowIndex * gridSpacing + unitRadius || point.Y > top_padding + (rowIndex+1) * gridSpacing - unitRadius) return;
+
+    point.bordered = false;
+    let slot = gridPoints[rowIndex][columnIndex]
+    slot.push(point);
+}
+
+/*
+=================================================================
+Miscellaneous functions
+=================================================================
+*/
+
+function addPoint (canvas, event) {
+    const cRect = canvas. getBoundingClientRect();
+
+    let newPointX = event.clientX - cRect.left;
+    let newPointY = event.clientY - cRect.top;
+    
+    if (newPointX < left_padding+interior_padding) return;
+    else if (newPointX > left_padding+edge_length_horizontal-interior_padding) return;
+
+    if (newPointY < top_padding+interior_padding) return;
+    else if (newPointY > top_padding+edge_length_vertical-interior_padding) return;
+
+
+    for (const point of inputPoints){
+        //all X and Y coordinates must be distinct
+        if (point.X === newPointX && point.Y === newPointY) return;
+    }
+
+    const newPoint = new PointRep(newPointX,newPointY);
+
+    inputPoints.push(newPoint);
+
+    // console.log(inputPoints.map((p)=>p.toString()));
+    // console.log("X: "+event.clientX+", Y: "+event.clientY);
+
+    adjustGrid(gridWidth, newPoint);
+    animate();
+}
+
+
+function clearPointFields(pointArray){
+    for (const point of pointArray){
+        point.bordered = true;
+        point.included = false;
+    }
+}
+
 
 
 canvas.addEventListener('mousedown', function(e) {
@@ -177,5 +225,19 @@ General Setup
 =================================================================
 */
 
+var gridInput = document.getElementById("changeGrids");
+window.onload = function() {
+    gridInput.addEventListener("input", function() {
+        if (gridInput.value > 0){
+            gridWidth = gridInput.value;
+            gridSpacing = gridWidth * unitRadius;
+
+            resetGrid(gridWidth);
+            animate();
+        }
+    });
+}
+
 ctx.strokeStyle = "white";
+resetGrid(gridWidth);
 animate();
