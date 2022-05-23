@@ -41,11 +41,16 @@
     
     <br> <br>
 
+    Our algorithm involves slicing the plane into grids of size k, and then solving the packing problem exactly within the grids. 
+    Stitching together the results of each of the grids (and discarding any disks lying along the gridlines) 
+    gives us a suitable approximation on a randomly selected choice of disks. Note that it is certainly possible to create frustrating
+    adversarial examples (i.e. placing all the disks along a set of grid lines which would lead to every disk being discarded) - 
+    quite an unfortunate feature of this approach!
+
+    <br> <br>
+
     For more information, see <a href="https://people.csail.mit.edu/indyk/6.838/handouts/lec19.pdf">here</a>.
   </div>
-
-  <button onclick="myFunction()"> Show Search Range </button>
-  <button onclick="Func2()"> Show left and right closest pairs </button>
 
   <script>
     function myFunction() {
