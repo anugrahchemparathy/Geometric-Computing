@@ -84,7 +84,7 @@ function animate() {
         }
     }
     //console.log(gridPoints);
-    console.log(packedPoints);
+    //console.log(packedPoints);
 
 };
 
@@ -167,6 +167,11 @@ function adjustGrid(k, point){
     point.bordered = false;
     let slot = gridPoints[rowIndex][columnIndex]
     slot.push(point);
+
+
+    clearPointIncludedFields(packedPoints[rowIndex][columnIndex]);
+    getSizedSubsetsRecursive(gridPoints[rowIndex][columnIndex], k ** 2, rowIndex, columnIndex, evaluationFunction = checkSubsetOverlap);
+    for (const point of packedPoints[rowIndex][columnIndex]) point.included = true;
 }
 
 /*
@@ -208,6 +213,12 @@ function addPoint (canvas, event) {
 function clearPointFields(pointArray){
     for (const point of pointArray){
         point.bordered = true;
+        point.included = false;
+    }
+}
+
+function clearPointIncludedFields(pointArray){
+    for (const point of pointArray){
         point.included = false;
     }
 }

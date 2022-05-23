@@ -40,7 +40,6 @@ function checkSubsetOverlap(subset) {
     for (let i = 0; i < subset.length; i++){
         for (let j = i+1; j < subset.length; j++){
             if (pointDistance(subset[i], subset[j]) < 2 * unitRadius) return false;
-            console.log(pointDistance(subset[i], subset[j]), unitRadius);
         }
     }
     return true;
@@ -49,5 +48,3 @@ function checkSubsetOverlap(subset) {
 function pointDistance(point1, point2){
     return ((point1.X - point2.X) ** 2 + (point1.Y - point2.Y) ** 2 ) ** 0.5 ;
 }
-
-//getSizedSubsetsRecursive([1,2,3,4,5,6],3);
