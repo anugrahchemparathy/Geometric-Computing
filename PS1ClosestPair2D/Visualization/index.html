@@ -15,10 +15,31 @@
 
 <body>
 
-  <canvas></canvas>
-  <br></br>
-  <button onclick="myFunction()"> Show Search Range </button>
-  <button onclick="Func2()"> Show left and right closest pairs </button>
+  <div style = "text-align:center;">
+    <canvas></canvas>
+    <br></br>
+    <button onclick="myFunction()"> Show Search Range </button>
+    <button onclick="Func2()"> Show left and right closest pairs </button>
+  </div>
+
+  <div id="canvasInfo">
+    Shown above is an interactive simulation of a recursive algorithm for finding the closest pair of points in a plane. 
+    You could attain this result in O(n ** 2) time with a simple brute force, but the clever recursion in O(n log(n)) time is much nicer!
+
+    <br> <br>
+
+    You can click either of the two buttons above to see the recursive stitching range and the left and right closest pairs from the top level of the recursion.
+    To understand what these are, you can read about the algorithm at one of the references below.
+
+    <br> <br>
+
+    This implementation also prevents you from imputting points with the same x or y coordinate as other points to avoid the need for random rotation 
+    (which would otherwise be used to enfore this property), so if you ever experience any awkwardness clicking new points, then that's probably why.
+
+    <br> <br>
+
+    For more information, see <a href="https://en.wikipedia.org/wiki/Closest_pair_of_points_problemf">here</a> and <a href = "https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/closepoints.pdf">here</a> and maybe also <a href = "https://sites.cs.ucsb.edu/~suri/cs235/ClosestPair.pdf">here</a>. The code is on <a href = "https://github.com/anugrahchemparathy/Geometric-Computing">github</a>.
+  </div>
 
   <script>
     function myFunction() {

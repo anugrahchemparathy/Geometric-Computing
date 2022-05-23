@@ -2,7 +2,7 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const inputPoints = [];
 
-canvas.width = Math.min(window.innerWidth,0.8*window.innerHeight);
+canvas.width = 0.9 * window.innerWidth;
 canvas.height = Math.min(window.innerWidth,0.8*window.innerHeight);
 
 window.addEventListener('resize', function () {
@@ -11,9 +11,9 @@ window.addEventListener('resize', function () {
 });
 
 
-let left_padding = canvas.width * 0.15;
-let top_padding = canvas.width * 0.05;
-let edge_length = canvas.width * 0.7;
+let left_padding = (canvas.width - canvas.height * 0.9 ) * 0.5;
+let top_padding = canvas.height * 0.05;
+let edge_length = canvas.height * 0.9;
 let interior_padding = edge_length * 0.02;
 let pointRadius = edge_length/70;
 
