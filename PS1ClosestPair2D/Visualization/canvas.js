@@ -5,11 +5,6 @@ const inputPoints = [];
 canvas.width = 0.9 * window.innerWidth;
 canvas.height = Math.min(window.innerWidth,0.8*window.innerHeight);
 
-window.addEventListener('resize', function () {
-    canvas.width = Math.min(window.innerWidth,window.innerHeight);
-    canvas.height = canvas.width;
-});
-
 
 let left_padding = (canvas.width - canvas.height * 0.9 ) * 0.5;
 let top_padding = canvas.height * 0.05;
