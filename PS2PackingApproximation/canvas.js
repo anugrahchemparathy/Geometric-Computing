@@ -12,11 +12,12 @@ let top_padding = canvas.height * 0.05;
 let edge_length_vertical = canvas.height * 0.9;
 let edge_length_horizontal = canvas.width * 0.9;
 let interior_padding = edge_length_vertical * 0.02;
-let unitRadius = edge_length_vertical/50; // arbitrarily define this to be the size of a single unit of measurement
+let unitRadius = edge_length_vertical/10; // arbitrarily define this to be the size of a single unit of measurement
 
 
+let subRadius = unitRadius / 2; // the radius of the subpoints
 let gridWidth = 10;
-let gridSpacing = unitRadius * gridWidth; //the practical canvas spacing equal to 1 grid cell
+let gridSpacing = subRadius * gridWidth ; //the practical canvas spacing equal to 1 grid cell
 
 const inputPoints = [];
 let gridPoints = [[]]; // [r][c] => [list of points in this grid cell]
@@ -97,7 +98,7 @@ Miscellaneous Grid Stuff
 function drawGrid(k) {
     ctx.strokeStyle = "white";
     
-    let gridSpacing = unitRadius * k; // by canvas dimensions
+    let gridSpacing = subRadius * k; // by canvas dimensions
     for (let r = 1; r * gridSpacing < edge_length_vertical; r++){
         ctx.beginPath();
         ctx.moveTo(left_padding, top_padding + gridSpacing * r);
